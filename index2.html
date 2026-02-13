@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khalifa Khalaf | Full Stack .NET Developer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            /* تعديل الألوان للوضع الغامق */
+            --primary-color: #f59e0b; /* لون ذهبي/أصفر لتباين عالي */
+            --dark-bg: #0f172a; /* خلفية الصفحة الأساسية */
+            --card-bg: #1e293b; /* خلفية الصناديق */
+            --light-text: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--dark-bg); color: var(--light-text); line-height: 1.6; overflow-x: hidden; }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        li { list-style: none; }
+
+        /* Navigation */
+        nav {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .logo { font-weight: 800; font-size: 1.5rem; color: var(--primary-color); }
+        .nav-links { display: flex; gap: 2rem; }
+        .nav-links a:hover { color: var(--primary-color); }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10%;
+            background: radial-gradient(circle at top right, #1e293b, #0f172a);
+            margin-top: 0;
+        }
+        .hero-text h1 { font-size: 3.5rem; margin-bottom: 1rem; }
+        .hero-text span { color: var(--primary-color); }
+        .hero-image img {
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 8px solid var(--card-bg);
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
+        }
+        .hero-btns { display: flex; gap: 1rem; margin-top: 1.5rem; }
+
+        /* Section Styling */
+        section { padding: 5rem 10%; border-bottom: 1px solid var(--border-color); }
+        .section-title { text-align: center; margin-bottom: 3rem; font-size: 2.2rem; color: var(--light-text); }
+        .section-title span { display: block; font-size: 1.2rem; color: var(--text-muted); font-weight: normal; margin-top: 5px; }
+        
+        /* About & Boxes */
+        .info-box {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 1rem;
+            border-left: 5px solid var(--primary-color);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.2);
+            margin-bottom: 2rem;
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+        .skill-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 0.8rem;
+            text-align: center;
+            transition: 0.3s;
+            border: 1px solid var(--border-color);
+        }
+        .skill-card:hover { 
+            transform: translateY(-10px); 
+            box-shadow: 0 10px 20px rgba(245, 158, 11, 0.1); 
+            border-color: var(--primary-color);
+        }
+        .skill-card i { font-size: 2.5rem; color: var(--primary-color); margin-bottom: 1rem; }
+
+        /* Projects Slider */
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3);
+            margin-bottom: 3rem;
+            border: 1px solid var(--border-color);
+        }
+        .project-slider {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 15px;
+            padding: 20px;
+            background: #0f172a;
+        }
+        .project-slider img {
+            width: 80%;
+            flex-shrink: 0;
+            max-height: 450px;
+            object-fit: contain;
+            scroll-snap-align: center;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.4);
+            border: 1px solid var(--border-color);
+        }
+        .project-slider::-webkit-scrollbar { height: 8px; }
+        .project-slider::-webkit-scrollbar-thumb { background: var(--primary-color); border-radius: 10px; }
+
+        .project-info { padding: 2.5rem; }
+        .tag {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--primary-color);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            border: 1px solid var(--primary-color);
+        }
+
+        /* Contact Form */
+        .contact-form {
+            max-width: 600px;
+            margin: 2rem auto;
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border: 1px solid var(--border-color);
+        }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: bold; color: var(--light-text); }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            background: #0f172a;
+            color: white;
+            border-radius: 0.5rem;
+            outline: none;
+        }
+        .form-group input:focus, .form-group textarea:focus { border-color: var(--primary-color); }
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary-color);
+            color: #000; /* نص غامق على خلفية ذهبية لوضوح أكثر */
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .submit-btn:hover { background: #d97706; transform: translateY(-2px); }
+
+        /* Contact Containers */
+        .contact-container {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            transition: 0.3s;
+        }
+        .btn:hover { opacity: 0.8; transform: scale(1.05); }
+        .btn-whatsapp { background: #25d366; color: white; }
+        .btn-linkedin { background: #0077b5; color: white; }
+        .btn-email { background: var(--primary-color); color: #000; }
+        .btn-outline { border: 2px solid var(--primary-color); color: var(--primary-color); background: transparent; }
+
+        footer { text-align: center; padding: 3rem; background: #070b14; color: white; border-top: 1px solid var(--border-color); }
+
+        @media (max-width: 768px) {
+            .hero { flex-direction: column-reverse; text-align: center; padding: 10% 5%; height: auto; margin-top: 80px; }
+            .hero-text h1 { font-size: 2.5rem; margin-top: 20px; }
+            .hero-image img { width: 200px; height: 200px; }
+            .hero-btns { justify-content: center; flex-direction: column; }
+            .nav-links { display: none; }
+            .project-slider img { width: 95%; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">KHALIFA.DEV</div>
+        <ul class="nav-links">
+            <li><a href="#home">Home | الرئيسية</a></li>
+            <li><a href="#about">About | عني</a></li>
+            <li><a href="#education">Education | التعليم</a></li>
+            <li><a href="#experience">Experience | الخبرة</a></li>
+            <li><a href="#skills">Skills | المهارات</a></li>
+            <li><a href="#projects">Projects | المشاريع</a></li>
+            <li><a href="#contact">Contact | تواصل</a></li>
+        </ul>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-text" data-aos="fade-right">
+            <h1>Hi, I'm <span>Khalifa Khalaf</span></h1>
+            <h2>Full Stack .NET Developer</h2>
+            <p style="margin: 1.5rem 0; font-size: 1.2rem; color: var(--text-muted);">
+                Your Partner in Digital Success. I don't just build websites; I accompany you from idea to execution to ensure the best experience for your project.<br>
+                <span>شريك نجاحك الرقمي.. لا أقوم ببناء المواقع فحسب، بل أرافقك من الفكرة حتى التنفيذ لضمان أفضل تجربة لمشروعك.</span>
+            </p>
+            <div class="hero-btns">
+                <a href="#contact" class="btn btn-email">Contact Me | تواصل معي</a>
+                <a href="#projects" class="btn btn-outline">View Projects | عرض المشروعات</a>
+            </div>
+        </div>
+        <div class="hero-image" data-aos="zoom-in">
+            <img src="images/khalifa.jpg" alt="Khalifa Khalaf">
+        </div>
+    </section>
+
+    <section id="about" data-aos="fade-up">
+        <h2 class="section-title">About Me <span>نبذة عني</span></h2>
+        <div class="info-box">
+            <h3>More Than Just a Coder, I'm Your Journey Partner 🤝 | أنا لست مجرد مبرمج، أنا شريك رحلتك</h3>
+            <p style="margin-top:15px;">
+                I am a Full Stack .NET Developer passionate about building integrated systems. Currently in my third year at the Faculty of Computers and Information (2023-2027). I believe clean code is the foundation of any successful project, and I care deeply about client follow-up and providing continuous technical support to ensure project growth.<br><br>
+                أنا مطور Full Stack .NET شغوف ببناء أنظمة متكاملة. في السنة الثالثة بكلية الحاسبات والمعلومات (2023-2027). أؤمن أن الكود النظيف هو أساس أي مشروع ناجح، وأهتم جداً بمتابعة العميل وتقديم الدعم التقني المستمر لضمان نمو مشروعه.
+            </p>
+        </div>
+    </section>
+
+    <section id="education" data-aos="fade-up">
+        <h2 class="section-title">Education <span>التعليم</span></h2>
+        <div class="info-box">
+            <h3>Faculty of Computers and Information 🎓 | كلية الحاسبات والمعلومات</h3>
+            <p style="margin-top: 10px;"><strong>Years:</strong> 2023 - 2027</p>
+            <p><strong>Status:</strong> Third Year Student | <strong>Department: Computer Science (CS)</strong></p>
+            <p style="margin-top: 10px;">Specializing in software engineering and modern development methodologies with a focus on .NET ecosystem.</p>
+        </div>
+    </section>
+
+    <section id="experience">
+        <h2 class="section-title">Work Experience <span>الخبرة العملية</span></h2>
+        <div class="info-box" data-aos="fade-left">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap;">
+                <div>
+                    <h3 style="color: var(--primary-color);">Full Stack .NET Developer Trainee</h3>
+                    <p><strong>Ro’oad Masr Digital Initiative (DEPI) | مبادرة رواد مصر الرقمية</strong></p>
+                </div>
+                <span class="tag">Present | حالياً</span>
+            </div>
+            <ul style="margin-top: 20px; padding-left: 20px;">
+                <li style="list-style: disc; margin-bottom: 10px;">Developing complex Management Systems using .NET technologies.<br>العمل على تطوير أنظمة إدارة معقدة باستخدام تقنيات الـ .NET.</li>
+                <li style="list-style: disc; margin-bottom: 10px;">Applying OOP concepts and Clean Architecture in real-world projects.<br>تطبيق مفاهيم الـ OOP و Clean Architecture في مشاريع حقيقية.</li>
+                <li style="list-style: disc;">Collaborating with teams to deliver high-quality software solutions.<br>التعاون مع الفرق البرمجية لتقديم حلول برمجية عالية الجودة.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="skills">
+        <h2 class="section-title">Technical Stack <span>المهارات التقنية</span></h2>
+        <div class="skills-grid">
+            <div class="skill-card" data-aos="flip-up">
+                <i class="fas fa-code"></i>
+                <h3>Languages | لغات</h3>
+                <p>C#, C++, Java, Python, SQL, HTML/CSS</p>
+            </div>
+            <div class="skill-card" data-aos="flip-up" data-aos-delay="100">
+                <i class="fab fa-microsoft"></i>
+                <h3>Backend | الباك إند</h3>
+                <p>.NET Core, ASP.NET Core, Web API, Entity Framework</p>
+            </div>
+            <div class="skill-card" data-aos="flip-up" data-aos-delay="200">
+                <i class="fas fa-database"></i>
+                <h3>Database | قواعد البيانات</h3>
+                <p>SQL Server, DB Design, Migration</p>
+            </div>
+            <div class="skill-card" data-aos="flip-up" data-aos-delay="300">
+                <i class="fas fa-tools"></i>
+                <h3>Engineering | هندسة</h3>
+                <p>OOP, DS, Algorithms, Problem Solving, Git/GitHub</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2 class="section-title">Portfolio <span>المشاريع</span></h2>
+        
+        <div class="project-card" data-aos="fade-up">
+            <div class="project-slider">
+                <img src="images/p1.jpg" alt="MediCore 1">
+                <img src="images/p2.jpg" alt="MediCore 2">
+                <img src="images/p3.jpg" alt="MediCore 3">
+                <img src="images/p4.jpg" alt="MediCore 4">
+                <img src="images/p5.jpg" alt="MediCore 5">
+                <img src="images/p6.jpg" alt="MediCore 6">
+                <img src="images/p7.jpg" alt="MediCore 7">
+                <img src="images/p8.jpg" alt="MediCore 8">
+                <img src="images/p9.jpg" alt="MediCore 9">
+            </div>
+            <div class="project-info">
+                <span class="tag">Full Stack .NET</span>
+                <h3 style="margin-top: 1rem;">MediCore - Hospital Management System | نظام ميدي كور لإدارة المستشفيات</h3>
+                <p style="color: var(--text-muted); margin: 1rem 0;">
+                    An integrated hospital management system including admin dashboard, patient management, appointment scheduling, and advanced billing system. Built with ASP.NET Core.<br>
+                    نظام متكامل لإدارة المستشفيات يشمل لوحة تحكم، إدارة المرضى، حجز المواعيد، ونظام الفواتير المتقدم.
+                </p>
+            </div>
+        </div>
+
+        <div class="project-card" data-aos="fade-up">
+            <div class="project-info">
+                <span class="tag">Office Specialist & Web</span>
+                <h3 style="margin-top: 1rem;">HA_OFFICE Landing Page | صفحة هبوط مكتب HA</h3>
+                <p style="color: var(--text-muted); margin: 1rem 0;">
+                    An integrated interface reflecting deep expertise in Microsoft Office solutions and professional administrative workflows, designed for maximum efficiency.<br>
+                    واجهة متكاملة تعكس خبرة عميقة في حلول برامج الأوفيس وسير العمل الإداري الاحترافي، صُممت لتحقيق أقصى درجات الكفاءة.
+                </p>
+                <a href="https://khalefakhalaf.github.io/HA_OFFICE/" target="_blank" class="btn btn-email" style="width: fit-content;">View Live Demo | معاينة مباشرة <i class="fas fa-external-link-alt"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2 class="section-title">Get In Touch <span>تواصل معي</span></h2>
+        
+        <div class="contact-container" data-aos="zoom-in">
+            <a href="https://wa.me/201012116741" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            <a href="mailto:khlfkhlyfh10@gmail.com" class="btn btn-email"><i class="fas fa-envelope"></i> Email</a>
+            <a href="https://www.linkedin.com/in/khalefa-khalaf-76847b364" class="btn btn-linkedin"><i class="fab fa-linkedin"></i> LinkedIn</a>
+        </div>
+
+        <form class="contact-form" data-aos="fade-up" action="https://formspree.io/f/xdalevbq" method="POST">
+            <h3 style="text-align: center; margin-bottom: 1.5rem;">Send a Message | أرسل رسالة</h3>
+            <div class="form-group">
+                <label>Name | الاسم</label>
+                <input type="text" name="name" placeholder="Your Name" required>
+            </div>
+            <div class="form-group">
+                <label>Email | البريد الإلكتروني</label>
+                <input type="email" name="email" placeholder="Your Email" required>
+            </div>
+            <div class="form-group">
+                <label>Message | الرسالة</label>
+                <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Send Message | إرسال</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Khalifa Khalaf. Built with Passion & .NET</p>
+        <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 10px;">Khalifa Khalaf Khalifa | Software Engineer</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+    </script>
+</body>
+</html>
